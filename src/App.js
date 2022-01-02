@@ -2,8 +2,6 @@ import React from 'react'
 import { auth } from './firebase/firebaseConfig'
 
 function App() {
-  console.log('app')
-
   auth.onAuthStateChanged((currentUser) => {
     console.log(currentUser ? 'Estamos logeados' : ' No estamos logeados')
   })
