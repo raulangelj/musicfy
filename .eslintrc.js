@@ -19,6 +19,7 @@ module.exports = {
   ],
   rules: {
     semi: ['error', 'never'],
+    'no-return-assign': 'off',
     'no-param-reassign': 'off',
     'react/forbid-prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
@@ -29,7 +30,7 @@ module.exports = {
   },
   globals: {
     React: 'readonly',
-    ReactDOM: 'readoonly',
+    ReactDOM: 'readonly',
     document: 'readonly',
   },
-};
+}
