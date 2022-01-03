@@ -1,14 +1,29 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react'
 import { auth } from './firebase/firebaseConfig'
+import AuthComponent from './pages/Auth/AuthComponent'
 
 function App() {
+  const [user, setUser] = useState(null)
+  const [isloading, setisloading] = useState(true)
+
   auth.onAuthStateChanged((currentUser) => {
-    console.log(currentUser ? 'Estamos logeados' : ' No estamos logeados')
+    if (!currentUser) {
+      setUser(null)
+    } else {
+      setUser(currentUser)
+    }
+    setisloading(false)
   })
+
+  if (isloading) {
+    return null
+  }
+
   return (
-    <div>
-      <h1>App electron + React</h1>
-    </div>
+    !user ? (
+      <AuthComponent />
+    ) : <h1>Usuario Loggeado</h1>
   )
 }
 
