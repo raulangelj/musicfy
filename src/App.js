@@ -8,6 +8,7 @@ function App() {
   const [isloading, setisloading] = useState(true)
 
   auth.onAuthStateChanged((currentUser) => {
+    console.log(currentUser)
     if (!currentUser) {
       setUser(null)
     } else {

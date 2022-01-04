@@ -21,6 +21,7 @@ module.exports = {
     semi: ['error', 'never'],
     'no-return-assign': 'off',
     'no-param-reassign': 'off',
+    'no-unused-expressions': 'off',
     'react/forbid-prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': 'off',

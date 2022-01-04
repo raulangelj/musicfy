@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AuthOptions from '../../Component/Auth/AuthOptions'
 import LoginForm from '../../Component/Auth/LoginForm'
 import RegisterForm from '../../Component/Auth/RegisterForm'
@@ -9,6 +9,10 @@ import './Auth.scss'
 
 const AuthComponent = () => {
   const [selectedForm, setselectedForm] = useState(null)
+
+  useEffect(() => {
+    setselectedForm(null)
+  }, [])
 
   const handlerForm = () => {
     switch (selectedForm) {
