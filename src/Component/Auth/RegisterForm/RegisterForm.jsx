@@ -1,15 +1,40 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button, Icon, Form, Input,
 } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 import { auth } from '../../../firebase/firebaseConfig'
 import './RegisterForm.scss'
 
+const defaultValueForm = () => ({
+  email: '',
+  password: '',
+  username: '',
+})
+
 const RegisterForm = ({ setselectedForm }) => {
-  const onSubmit = () => {
-    console.log('submit')
+  const [formData, setformData] = useState(defaultValueForm)
+  const [showPassword, setshowPassword] = useState(false)
+
+  RegisterForm.propTypes = {
+    setselectedForm: PropTypes.func.isRequired,
+  }
+
+  const handelChange = (e) => {
+    setformData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handlerShowPassword = () => {
+    setshowPassword(!showPassword)
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    console.log('submit', formData)
   }
 
   return (
@@ -22,17 +47,21 @@ const RegisterForm = ({ setselectedForm }) => {
             name="email"
             placeholder="Correo Electronico"
             icon="mail outline"
-            // onChange={}
+            onChange={(e) => handelChange(e)}
             // error={}
           />
         </Form.Field>
         <Form.Field>
           <Input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             name="password"
             placeholder="Contraseña"
-            icon="eye"
-            // onChange={}
+            icon={showPassword ? (
+              <Icon name="eye slash outline" link onClick={handlerShowPassword} />
+            ) : (
+              <Icon name="eye" link onClick={handlerShowPassword} />
+            )}
+            onChange={(e) => handelChange(e)}
             // error={}
           />
         </Form.Field>
@@ -42,7 +71,7 @@ const RegisterForm = ({ setselectedForm }) => {
             name="username"
             placeholder="¿Como deberiamos llamarte?"
             icon="user circle outline"
-            // onChange={}
+            onChange={(e) => handelChange(e)}
             // error={}
           />
         </Form.Field>
