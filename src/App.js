@@ -32,7 +32,7 @@ function App() {
       {
         !user
           ? <AuthComponent />
-          : <h1>Usuario Loggeado</h1>
+          : <UserLogged />
       }
       <ToastContainer
         position="top-center"
@@ -47,6 +47,27 @@ function App() {
         theme="colored"
       />
     </>
+  )
+}
+
+const UserLogged = () => {
+  const logout = () => {
+    auth.signOut()
+  }
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        height: '100vh',
+      }}
+    >
+      <h1>Usuario loggeado</h1>
+      <button type="button" onClick={logout}>Cerrar sesion</button>
+    </div>
   )
 }
 
