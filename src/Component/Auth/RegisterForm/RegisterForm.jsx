@@ -4,6 +4,7 @@ import {
   Button, Icon, Form, Input,
 } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
 import { auth } from '../../../firebase/firebaseConfig'
 import './RegisterForm.scss'
 import validateEmail from '../../../utils/Validations'
@@ -35,6 +36,15 @@ const RegisterForm = ({ setselectedForm }) => {
     setshowPassword(!showPassword)
   }
 
+  const changeUserName = () => {
+    auth.currentUser.updateProfile({
+      displayName: formData.username,
+    })
+      .catch(() => {
+        toast.error('Error al asignar el nombre de usuario.')
+      })
+  }
+
   const onSubmit = (e) => {
     e.preventDefault()
     // setformError({})
@@ -58,13 +68,16 @@ const RegisterForm = ({ setselectedForm }) => {
       auth.createUserWithEmailAndPassword(formData.email, formData.password)
         .then((response) => {
           console.log('completado', response)
+          changeUserName()
         })
         .catch((err) => {
-          console.error('error al crear la cuenta', err)
+          toast.error('Error al crear la cuenta.')
         })
         .finally(() => {
           setisloading(false)
           setselectedForm(null)
+          // crea dos erroes de memory por que en el app.js el
+          // onauthstatechanged cambie el componente antes de que termine de hacerse el finally
         })
     }
   }
