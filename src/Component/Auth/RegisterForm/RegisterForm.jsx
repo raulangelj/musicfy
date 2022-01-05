@@ -130,7 +130,7 @@ const RegisterForm = ({ setselectedForm }) => {
           {
             formError.password && (
               <span className="error-text">
-                Elige una contraseña mayor a 6 caracteres.
+                Elige una contraseña mayor a 5 caracteres.
               </span>
             )
           }
