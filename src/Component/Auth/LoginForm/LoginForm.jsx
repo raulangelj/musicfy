@@ -42,6 +42,14 @@ const LoginForm = ({ setselectedForm }) => {
           Iniciar sesion
         </Button>
       </Form>
+      <div className="login-form__options">
+        <p onClick={() => setselectedForm(null)} aria-hidden="true">Volver</p>
+        <p>
+          ¿No tienes cuenta?
+          {' '}
+          <span onClick={() => setselectedForm('register')} aria-hidden="true">Registrate</span>
+        </p>
+      </div>
     </div>
   )
 }
