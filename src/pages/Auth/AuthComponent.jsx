@@ -17,7 +17,11 @@ const AuthComponent = () => {
   const handlerForm = () => {
     switch (selectedForm) {
       case 'login':
-        return <LoginForm />
+        return (
+          <LoginForm
+            setselectedForm={setselectedForm}
+          />
+        )
       case 'register':
         return (
           <RegisterForm
