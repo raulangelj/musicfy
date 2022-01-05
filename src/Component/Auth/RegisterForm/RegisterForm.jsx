@@ -32,7 +32,7 @@ const RegisterForm = ({ setselectedForm }) => {
     })
   }
 
-  const handlerShowPassword = () => {
+  const handleShowPassword = () => {
     setshowPassword(!showPassword)
   }
 
@@ -120,9 +120,9 @@ const RegisterForm = ({ setselectedForm }) => {
             name="password"
             placeholder="Contraseña"
             icon={showPassword ? (
-              <Icon name="eye slash outline" link onClick={handlerShowPassword} />
+              <Icon name="eye slash outline" link onClick={handleShowPassword} />
             ) : (
-              <Icon name="eye" link onClick={handlerShowPassword} />
+              <Icon name="eye" link onClick={handleShowPassword} />
             )}
             onChange={(e) => handleChange(e)}
             error={formError.password}
