@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { auth } from './firebase/firebaseConfig'
+import LoggedLayout from './layouts/loggedLayout'
 import AuthComponent from './pages/Auth/AuthComponent'
 
 function App() {
@@ -13,7 +14,6 @@ function App() {
       auth.signOut()
       setUser(null)
     } else {
-      console.log('cambio el user', currentUser)
       setUser(currentUser)
     }
     setisloading(false)
@@ -28,7 +28,11 @@ function App() {
       {
         !user
           ? <AuthComponent />
-          : <UserLogged />
+          : (
+            <LoggedLayout
+              user={user}
+            />
+          )
       }
       <ToastContainer
         position="top-center"
@@ -43,28 +47,6 @@ function App() {
         theme="colored"
       />
     </>
-  )
-}
-
-const UserLogged = () => {
-  const logout = () => {
-    auth.signOut()
-    console.log('auth', auth.currentUser)
-  }
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        height: '100vh',
-      }}
-    >
-      <h1>Usuario loggeado</h1>
-      <button type="button" onClick={logout}>Cerrar sesion</button>
-    </div>
   )
 }
 
