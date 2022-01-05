@@ -25,7 +25,7 @@ const RegisterForm = ({ setselectedForm }) => {
     setselectedForm: PropTypes.func.isRequired,
   }
 
-  const handelChange = (e) => {
+  const handleChange = (e) => {
     setformData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -103,7 +103,7 @@ const RegisterForm = ({ setselectedForm }) => {
             name="email"
             placeholder="Correo Electronico"
             icon="mail outline"
-            onChange={(e) => handelChange(e)}
+            onChange={(e) => handleChange(e)}
             error={formError.email}
           />
           {
@@ -124,7 +124,7 @@ const RegisterForm = ({ setselectedForm }) => {
             ) : (
               <Icon name="eye" link onClick={handlerShowPassword} />
             )}
-            onChange={(e) => handelChange(e)}
+            onChange={(e) => handleChange(e)}
             error={formError.password}
           />
           {
@@ -141,7 +141,7 @@ const RegisterForm = ({ setselectedForm }) => {
             name="username"
             placeholder="¿Como deberiamos llamarte?"
             icon="user circle outline"
-            onChange={(e) => handelChange(e)}
+            onChange={(e) => handleChange(e)}
             error={formError.username}
           />
           {
