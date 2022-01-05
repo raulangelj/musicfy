@@ -11,7 +11,9 @@ function App() {
   auth.onAuthStateChanged((currentUser) => {
     if (!currentUser?.emailVerified) {
       auth.signOut()
+      setUser(null)
     } else {
+      console.log('cambio el user', currentUser)
       setUser(currentUser)
     }
     setisloading(false)
@@ -47,6 +49,7 @@ function App() {
 const UserLogged = () => {
   const logout = () => {
     auth.signOut()
+    console.log('auth', auth.currentUser)
   }
 
   return (
