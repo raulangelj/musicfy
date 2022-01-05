@@ -10,8 +10,14 @@ function App() {
 
   auth.onAuthStateChanged((currentUser) => {
     console.log(currentUser)
-    if (!currentUser) {
-      setUser(null)
+    // if (!currentUser) {
+    //   setUser(null)
+    // } else {
+    //   setUser(currentUser)
+    // } // descomentar y borrar el if else de arriba cuando se pueda
+    // cambiar el nombre y enviar correo de activacion antes de que haga signout
+    if (!currentUser?.emailVerified) {
+      auth.signOut()
     } else {
       setUser(currentUser)
     }
@@ -22,11 +28,6 @@ function App() {
     return null
   }
 
-  // return (
-  //   !user ? (
-  //     <AuthComponent />
-  //   ) : <h1>Usuario Loggeado</h1>
-  // )
   return (
     <>
       {

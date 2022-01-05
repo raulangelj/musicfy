@@ -36,12 +36,22 @@ const RegisterForm = ({ setselectedForm }) => {
     setshowPassword(!showPassword)
   }
 
-  const changeUserName = () => {
-    auth.currentUser.updateProfile({
+  const changeUserName = (user) => {
+    user?.updateProfile({
       displayName: formData.username,
     })
       .catch(() => {
         toast.error('Error al asignar el nombre de usuario.')
+      })
+  }
+
+  const sendVerificationEmail = (user) => {
+    user?.sendEmailVerification()
+      .then(() => {
+        toast.success('Se ha enviado un email de verificacion.')
+      })
+      .catch(() => {
+        toast.error('Error al enviar el email de verificacion.')
       })
   }
 
@@ -67,8 +77,9 @@ const RegisterForm = ({ setselectedForm }) => {
       setisloading(true)
       auth.createUserWithEmailAndPassword(formData.email, formData.password)
         .then((response) => {
-          console.log('completado', response)
-          changeUserName()
+          const { user } = response
+          changeUserName(user)
+          sendVerificationEmail(user)
         })
         .catch((err) => {
           toast.error('Error al crear la cuenta.')
