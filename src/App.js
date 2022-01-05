@@ -9,13 +9,6 @@ function App() {
   const [isloading, setisloading] = useState(true)
 
   auth.onAuthStateChanged((currentUser) => {
-    console.log(currentUser)
-    // if (!currentUser) {
-    //   setUser(null)
-    // } else {
-    //   setUser(currentUser)
-    // } // descomentar y borrar el if else de arriba cuando se pueda
-    // cambiar el nombre y enviar correo de activacion antes de que haga signout
     if (!currentUser?.emailVerified) {
       auth.signOut()
     } else {
