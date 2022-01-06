@@ -1,11 +1,17 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Menu, Icon, MenuItem } from 'semantic-ui-react'
-import { Link, withRouter } from 'react-router-dom'
+import {
+  Link, useLocation, useNavigate, useParams,
+} from 'react-router-dom'
 import './MenuLeft.scss'
 
 const MenuLeft = ({ user }) => {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const params = useParams()
+
   MenuLeft.propTypes = {
     user: PropTypes.object.isRequired,
   }
@@ -13,12 +19,12 @@ const MenuLeft = ({ user }) => {
   return (
     <Menu vertical className="menu-left">
       <div className="top">
-        <MenuItem name="home">
+        <Menu.Item as={Link} to="/" name="home">
           <Icon name="home" />
           {' '}
           Inicio
-        </MenuItem>
-        <MenuItem name="artists">
+        </Menu.Item>
+        <MenuItem as={Link} to="/artists" name="artists">
           <Icon name="music" />
           {' '}
           Artistas
