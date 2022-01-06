@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Grid, GridColumn, GridRow } from 'semantic-ui-react'
 import Routess from '../../routes/Routes'
+import LeftMenu from '../../Component/Auth/MenuLeft'
 import './LoggedLayout.scss'
 
 const LoggedLayout = ({ user }) => {
@@ -15,7 +16,9 @@ const LoggedLayout = ({ user }) => {
       <Grid className="logged-layout">
         <Grid.Row>
           <Grid.Column width={3}>
-            <h2>Menu left</h2>
+            <LeftMenu
+              user={user}
+            />
           </Grid.Column>
           <Grid.Column className="content" width={13}>
             <h2>Top BAr</h2>
