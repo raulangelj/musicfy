@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Grid, GridColumn, GridRow } from 'semantic-ui-react'
 import Routess from '../../routes/Routes'
-import LeftMenu from '../../Component/Auth/MenuLeft'
+import LeftMenu from '../../Component/MenuLeft'
 import './LoggedLayout.scss'
 
 const LoggedLayout = ({ user }) => {
