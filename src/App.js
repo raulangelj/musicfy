@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { auth } from './firebase/firebaseConfig'
-import LoggedLayout from './layouts/loggedLayout'
+import LoggedLayout from './layouts/LoggedLayout'
 import AuthComponent from './pages/Auth/AuthComponent'
 
 function App() {
