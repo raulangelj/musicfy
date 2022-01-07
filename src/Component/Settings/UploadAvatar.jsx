@@ -7,11 +7,12 @@ import { toast } from 'react-toastify'
 import NoAvatar from '../../assets/png/user.png'
 import { auth, storage } from '../../firebase/firebaseConfig'
 
-const UploadAvatar = ({ user }) => {
+const UploadAvatar = ({ user, setreloadApp }) => {
   const [avatarUrl, setavatarUrl] = useState(user.photoURL)
 
   UploadAvatar.propTypes = {
     user: propTypes.object.isRequired,
+    setreloadApp: propTypes.func.isRequired,
   }
 
   const uploadImage = (file) => {
@@ -26,8 +27,9 @@ const UploadAvatar = ({ user }) => {
     storage
       .ref(`avatar/${user.uid}`)
       .getDownloadURL()
-      .then((res) => {
-        auth.currentUser.updateProfile({ photoURL: res })
+      .then(async (res) => {
+        await auth.currentUser.updateProfile({ photoURL: res })
+        setreloadApp((prevState) => !prevState)
       })
       .catch((error) => {
         toast.error('Erro al actualizar avatar.')

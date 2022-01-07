@@ -6,15 +6,16 @@ import { Routes, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import Settings from '../pages/Settings'
 
-const Routess = ({ user }) => {
+const Routess = ({ user, setreloadApp }) => {
   Routess.propTypes = {
     user: propTypes.object.isRequired,
+    setreloadApp: propTypes.func.isRequired,
   }
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
       <Route exact path="/artists" element={<h1>Artist</h1>} />
-      <Route exact path="/settings" element={<Settings user={user} />} />
+      <Route exact path="/settings" element={<Settings user={user} setreloadApp={setreloadApp} />} />
     </Routes>
   )
 }

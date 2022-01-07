@@ -35,7 +35,7 @@ const TopBar = ({ user }) => {
       </div>
       <div className="top-bar__right">
         <Link to="/settings">
-          <Image src={UserImage} />
+          <Image src={user.photoURL || UserImage} />
           {
             user.displayName
           }
