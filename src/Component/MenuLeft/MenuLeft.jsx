@@ -31,9 +31,14 @@ const MenuLeft = ({ user }) => {
       })
   }, [user])
 
-  const handleMenu = (e, menu) => {
-    setactiveMenu(menu.to)
-  }
+  useEffect(() => {
+    setactiveMenu(location.pathname)
+  }, [location])
+
+  // ! Remove function form Menu.item onclick because useEffect does the same thing
+  // const handleMenu = (e, menu) => {
+  //   setactiveMenu(menu.to)
+  // }
 
   const handleModal = (type) => {
     switch (type) {
@@ -59,12 +64,12 @@ const MenuLeft = ({ user }) => {
     <>
       <Menu vertical className="menu-left">
         <div className="top">
-          <Menu.Item as={Link} to="/" name="home" active={activeMenu === '/'} onClick={handleMenu}>
+          <Menu.Item as={Link} to="/" name="home" active={activeMenu === '/'}>
             <Icon name="home" />
             {' '}
             Inicio
           </Menu.Item>
-          <MenuItem as={Link} to="/artists" name="artists" active={activeMenu === '/artists'} onClick={handleMenu}>
+          <MenuItem as={Link} to="/artists" name="artists" active={activeMenu === '/artists'}>
             <Icon name="music" />
             {' '}
             Artistas
