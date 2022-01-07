@@ -10,12 +10,16 @@ import UserImage from '../../assets/png/user.png'
 import './TopBar.scss'
 
 const TopBar = ({ user }) => {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const params = useParams()
+
   TopBar.propTypes = {
     user: PropTypes.object.isRequired,
   }
 
   const goBack = () => {
-    console.log(' ir atras')
+    navigate(-1)
   }
 
   const logout = () => {
