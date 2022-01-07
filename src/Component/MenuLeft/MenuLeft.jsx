@@ -15,6 +15,10 @@ const MenuLeft = ({ user }) => {
   const params = useParams()
   const [activeMenu, setactiveMenu] = useState(location.pathname)
   const [userAdmin, setuserAdmin] = useState(false)
+  // * Cambiar a un solo objeto
+  const [showModal, setshowModal] = useState(false)
+  const [titleModal, settitleModal] = useState(null)
+  const [contentModal, setcontentModal] = useState(null)
 
   MenuLeft.propTypes = {
     user: PropTypes.object.isRequired,
@@ -29,6 +33,26 @@ const MenuLeft = ({ user }) => {
 
   const handleMenu = (e, menu) => {
     setactiveMenu(menu.to)
+  }
+
+  const handleModal = (type) => {
+    switch (type) {
+      case 'artist':
+        settitleModal('Nuevo artista')
+        setcontentModal(<h2>Formulario nuevo artista</h2>)
+        setshowModal(true)
+        break
+      case 'song':
+        settitleModal('Nueva cancion')
+        setcontentModal(<h2>Formulario nueva cancion</h2>)
+        setshowModal(true)
+        break
+      default:
+        settitleModal(null)
+        setshowModal(false)
+        setcontentModal(null)
+        break
+    }
   }
 
   return (
@@ -49,12 +73,12 @@ const MenuLeft = ({ user }) => {
         {userAdmin
         && (
           <div className="footer">
-            <MenuItem>
+            <MenuItem onClick={() => handleModal('artist')}>
               <Icon name="plus square outline" />
               {' '}
               Nuevo Artista
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => handleModal('song')}>
               <Icon name="plus square outline" />
               {' '}
               Nueva Cancion
@@ -62,8 +86,10 @@ const MenuLeft = ({ user }) => {
           </div>
         )}
       </Menu>
-      <BasicModal title="Test title" setShow={null}>
-        <h2>Contanido del modal</h2>
+      <BasicModal show={showModal} title={titleModal} setShow={setshowModal}>
+        {
+          contentModal
+        }
       </BasicModal>
     </>
   )

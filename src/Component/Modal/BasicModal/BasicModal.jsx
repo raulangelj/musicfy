@@ -10,14 +10,17 @@ const BasicModal = ({
   BasicModal.propTypes = {
     show: PropTypes.bool,
     size: PropTypes.string,
-    children: PropTypes.node.isRequired,
-    setShow: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    setShow: PropTypes.func,
+    children: PropTypes.node,
   }
 
   BasicModal.defaultProps = {
-    size: 'tiny',
+    title: '',
     show: false,
+    size: 'tiny',
+    setShow: () => null,
+    children: <div>{null}</div>,
   }
 
   const onClose = () => {
