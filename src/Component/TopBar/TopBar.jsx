@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import { Icon, Image } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
 import { auth } from '../../firebase/firebaseConfig'
 import UserImage from '../../assets/png/user.png'
 import './TopBar.scss'
@@ -23,7 +24,8 @@ const TopBar = ({ user }) => {
   }
 
   const logout = () => {
-    console.log('cerrar sesion')
+    toast.success('Has cerrado sesion con exito!')
+    auth.signOut()
   }
 
   return (
