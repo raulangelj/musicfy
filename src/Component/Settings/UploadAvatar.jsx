@@ -8,10 +8,39 @@ import NoAvatar from '../../assets/png/user.png'
 import { auth, storage } from '../../firebase/firebaseConfig'
 
 const UploadAvatar = ({ user }) => {
-  const [avatarUrl, setavatarUrl] = useState(user.photo)
+  const [avatarUrl, setavatarUrl] = useState(user.photoURL)
+
+  UploadAvatar.propTypes = {
+    user: propTypes.object.isRequired,
+  }
+
+  const uploadImage = (file) => {
+    console.log('file: ', file)
+    const ref = storage
+      .ref()
+      .child(`avatar/${user.uid}`)
+    return ref.put(file)
+  }
+
+  const updateUserAvatar = () => {
+    storage
+      .ref(`avatar/${user.uid}`)
+      .getDownloadURL()
+      .then((res) => {
+        auth.currentUser.updateProfile({ photoURL: res })
+      })
+      .catch((error) => {
+        toast.error('Erro al actualizar avatar.')
+      })
+  }
 
   const onDrop = useCallback((acceptedFiles) => {
-    console.log('acceptedFiles: ', acceptedFiles)
+    const file = acceptedFiles[0]
+    setavatarUrl(URL.createObjectURL(file))
+    uploadImage(file)
+      .then((res) => {
+        updateUserAvatar()
+      })
   })
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -19,10 +48,6 @@ const UploadAvatar = ({ user }) => {
     noKeyboard: true,
     onDrop,
   })
-
-  UploadAvatar.propTypes = {
-    user: propTypes.object.isRequired,
-  }
 
   return (
     <div className="user-avatar" {...getRootProps()}>
