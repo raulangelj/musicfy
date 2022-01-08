@@ -10,6 +10,7 @@ body {
   color: $font-grey;
 }
 
+// GLOBAL TOAST UI STYLES
 .Toastify {
   .Toastify__toast-container--top-center {
     width: 100%;
@@ -23,6 +24,43 @@ body {
 
     .Toastify__close-button {
       align-self: center;
+    }
+  }
+}
+
+// GLOBAL FORMS STYLES
+.ui.form {
+  
+  .field {
+    .input {
+      input {
+        background-color: $background-grey-light;
+        font-size: 16px;
+        color: $font-light;
+        border: 0;
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: $background-grey-light-hover;
+          color: $font-light;
+          border: 0;
+        }
+      }
+    }
+  }
+
+  .ui.button {
+    width: 100%;
+    margin-top: 20px;
+    background-color: $primary-color;
+    color: $font-light;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 50px;
+
+    &:hover {
+      background-color: $primary-color-hover;
     }
   }
 }
