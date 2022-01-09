@@ -50,12 +50,12 @@ const ChangePasswordForm = ({ setModal }) => {
           currentUser.updatePassword(formData.newPassword)
             .then(() => {
               toast.success('Contraseña actualizada')
+              auth.signOut()
               setisloading(false)
               setModal((prevState) => ({
                 ...prevState,
                 show: false,
               }))
-              auth.signOut()
             })
             .catch((err) => {
               alertErrors(err?.code)
