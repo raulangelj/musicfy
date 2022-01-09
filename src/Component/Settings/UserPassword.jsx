@@ -1,11 +1,17 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button, Form, FormField, Input, Icon,
 } from 'semantic-ui-react'
 import propTypes from 'prop-types'
 
 const ChangePasswordForm = ({ setModal }) => {
+  const [passwordsShow, setpasswordsShow] = useState({
+    actualPassword: false,
+    newPassword: false,
+    newPassword2: false,
+  })
+
   ChangePasswordForm.propTypes = {
     setModal: propTypes.func.isRequired,
   }
@@ -19,27 +25,96 @@ const ChangePasswordForm = ({ setModal }) => {
       <FormField>
         <Input
           placeholder="Contraseña actual"
-          type="password"
+          name="atualPassword"
+          type={passwordsShow.actualPassword ? 'text' : 'password'}
           icon={
-            <Icon link name="eye" />
+            passwordsShow.actualPassword ? (
+              <Icon
+                link
+                name="eye slash outline"
+                onClick={() => {
+                  setpasswordsShow((prevState) => ({
+                    ...prevState,
+                    actualPassword: !prevState.actualPassword,
+                  }))
+                }}
+              />
+            ) : (
+              <Icon
+                link
+                name="eye"
+                onClick={() => {
+                  setpasswordsShow((prevState) => ({
+                    ...prevState,
+                    actualPassword: !prevState.actualPassword,
+                  }))
+                }}
+              />
+            )
           }
         />
       </FormField>
       <FormField>
         <Input
           placeholder="Nueva contraseña"
-          type="password"
+          name="newPassword"
+          type={passwordsShow.newPassword ? 'text' : 'password'}
           icon={
-            <Icon link name="eye" />
+            passwordsShow.newPassword ? (
+              <Icon
+                link
+                name="eye slash outline"
+                onClick={() => {
+                  setpasswordsShow((prevState) => ({
+                    ...prevState,
+                    newPassword: !prevState.newPassword,
+                  }))
+                }}
+              />
+            ) : (
+              <Icon
+                link
+                name="eye"
+                onClick={() => {
+                  setpasswordsShow((prevState) => ({
+                    ...prevState,
+                    newPassword: !prevState.newPassword,
+                  }))
+                }}
+              />
+            )
           }
         />
       </FormField>
       <FormField>
         <Input
           placeholder="Repetir nueva contraseña"
-          type="password"
+          name="newPassword2"
+          type={passwordsShow.newPassword2 ? 'text' : 'password'}
           icon={
-            <Icon link name="eye" />
+            passwordsShow.newPassword2 ? (
+              <Icon
+                link
+                name="eye slash outline"
+                onClick={() => {
+                  setpasswordsShow((prevState) => ({
+                    ...prevState,
+                    newPassword2: !prevState.newPassword2,
+                  }))
+                }}
+              />
+            ) : (
+              <Icon
+                link
+                name="eye"
+                onClick={() => {
+                  setpasswordsShow((prevState) => ({
+                    ...prevState,
+                    newPassword2: !prevState.newPassword2,
+                  }))
+                }}
+              />
+            )
           }
         />
       </FormField>
