@@ -16,7 +16,6 @@ const UploadAvatar = ({ user, setreloadApp }) => {
   }
 
   const uploadImage = (file) => {
-    console.log('file: ', file)
     const ref = storage
       .ref()
       .child(`avatar/${user.uid}`)

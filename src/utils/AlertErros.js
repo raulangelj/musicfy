@@ -2,7 +2,6 @@ import { toast } from 'react-toastify'
 
 // FUNCTION TO HANDLE DIFERENTS FIREBASE AUTH ERRORS
 const alertErrors = (errCode) => {
-  console.log(errCode)
   switch (errCode) {
     case 'auth/user-not-found':
       toast.warning('Usario incorrecto.')

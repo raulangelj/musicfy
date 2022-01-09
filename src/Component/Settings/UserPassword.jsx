@@ -43,11 +43,9 @@ const ChangePasswordForm = ({ setModal }) => {
     } else if (formData.newPassword.length < 6) {
       toast.warning('La nueva contraseña debe tener minimo 6 caracteres.')
     } else {
-      console.log('enviando form', formData)
       setisloading(true)
       reauthenticate(formData.actualPassword)
         .then((res) => {
-          console.log('todo correcto')
           const { currentUser } = auth
           currentUser.updatePassword(formData.newPassword)
             .then(() => {
