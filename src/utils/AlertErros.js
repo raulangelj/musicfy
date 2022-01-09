@@ -15,6 +15,9 @@ const alertErrors = (errCode) => {
     case 'auth/too-many-requests':
       toast.warning('Has enviado demasiadas solicitudes de email de confirmacion en muy poco tiempo.')
       break
+    case 'storage/object-not-found':
+      toast.warning('No se encontro la imagen.')
+      break
     default:
       toast.warning('Ha ocurrido un error, revisa los datos e intentalo mas tarde.')
       break
