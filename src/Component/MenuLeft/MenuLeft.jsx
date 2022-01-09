@@ -8,6 +8,7 @@ import {
 import './MenuLeft.scss'
 import { isUserAdmin } from '../../firebase/Apis'
 import BasicModal from '../Modal/BasicModal'
+import AddArtistForm from '../Artists'
 
 const MenuLeft = ({ user }) => {
   const location = useLocation()
@@ -46,7 +47,7 @@ const MenuLeft = ({ user }) => {
       case 'artist':
         setmodal({
           title: 'Nuevo artista',
-          content: <h2>Formulario nuevo artista</h2>,
+          content: <AddArtistForm />,
           show: true,
         })
         break
