@@ -10,11 +10,14 @@ const alertErrors = (errCode) => {
     case 'auth/wrong-password':
       toast.warning('La contraseña introducida es incorrecta.')
       break
+    case 'auth/email-already-in-use':
+      toast.warning('El nuevo email ya esta en uso.')
+      break
     case 'auth/too-many-requests':
       toast.warning('Has enviado demasiadas solicitudes de email de confirmacion en muy poco tiempo.')
       break
     default:
-      toast.warning('Ha ocurrido un error, revisa tu correo y contraseña e intentalo mas tarde.')
+      toast.warning('Ha ocurrido un error, revisa los datos e intentalo mas tarde.')
       break
   }
 }

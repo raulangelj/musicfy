@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import React, { useState } from 'react'
 import BasicModal from '../../Component/Modal/BasicModal'
 import UploadAvatar from '../../Component/Settings/UploadAvatar'
+import UserEmail from '../../Component/Settings/UserEmail'
 import UserName from '../../Component/Settings/UserName'
 import './Settings.scss'
 
@@ -25,6 +26,7 @@ const Settings = ({ user, setreloadApp }) => {
         <UploadAvatar user={user} setreloadApp={setreloadApp} />
         <UserName user={user} setModal={setModal} setreloadApp={setreloadApp} />
       </div>
+      <UserEmail user={user} setModal={setModal} />
       <BasicModal show={modal.show} setmodal={setModal} title={modal.title}>
         {
           modal.content
