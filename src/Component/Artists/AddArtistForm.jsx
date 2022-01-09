@@ -1,20 +1,48 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useCallback, useState } from 'react'
+import propTypes from 'prop-types'
+import { useDropzone } from 'react-dropzone'
 import {
   Button, Form, Input, Image, FormField,
 } from 'semantic-ui-react'
+import NoImage from '../../assets/png/no-image.png'
 import './AddArtistForm.scss'
 
-const AddArtistForm = () => {
+const AddArtistForm = ({ setModal }) => {
+  const [banner, setBanner] = useState(null)
+  const [file, setFile] = useState(null)
+
+  AddArtistForm.propTypes = {
+    setModal: propTypes.func.isRequired,
+  }
+
+  const onDrop = useCallback((acceptedFile) => {
+    console.log(acceptedFile)
+    const firstFile = acceptedFile[0]
+    setFile(firstFile)
+    setBanner(URL.createObjectURL(firstFile))
+  })
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/jpeg, image/png',
+    noKeyboard: true,
+    onDrop,
+  })
+
   const onSubmit = () => {
     console.log('creando artist')
+    setModal((prevState) => ({
+      ...prevState,
+      show: false,
+    }))
   }
 
   return (
     <Form className="add-artist-form" onSubmit={onSubmit}>
       <FormField className="artist-banner">
+        <div {...getRootProps()} className="banner" />
         <Input
-          type="file"
+          {...getInputProps()}
         />
       </FormField>
       <FormField className="artist-avatar">

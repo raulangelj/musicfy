@@ -47,7 +47,7 @@ const MenuLeft = ({ user }) => {
       case 'artist':
         setmodal({
           title: 'Nuevo artista',
-          content: <AddArtistForm />,
+          content: <AddArtistForm setModal={setmodal} />,
           show: true,
         })
         break
