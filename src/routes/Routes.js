@@ -3,6 +3,8 @@
 import propTypes from 'prop-types'
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import Artist from '../pages/Artist'
+// PAGES
 import Home from '../pages/Home'
 import Settings from '../pages/Settings'
 
@@ -16,6 +18,7 @@ const Routess = ({ user, setreloadApp }) => {
       <Route exact path="/" element={<Home />} />
       <Route exact path="/artists" element={<h1>Artist</h1>} />
       <Route exact path="/settings" element={<Settings user={user} setreloadApp={setreloadApp} />} />
+      <Route exact path="/artist/:id" element={<Artist />} />
     </Routes>
   )
 }

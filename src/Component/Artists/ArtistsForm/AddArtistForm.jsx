@@ -7,9 +7,9 @@ import {
 } from 'semantic-ui-react'
 import { toast } from 'react-toastify'
 import { v4 as uuidv4 } from 'uuid'
-import NoImage from '../../assets/png/no-image.png'
+import NoImage from '../../../assets/png/no-image.png'
 import './AddArtistForm.scss'
-import { db, storage } from '../../firebase/firebaseConfig'
+import { db, storage } from '../../../firebase/firebaseConfig'
 
 const initialValueForm = () => ({
   name: '',
@@ -40,7 +40,7 @@ const AddArtistForm = ({ setModal }) => {
   const uploadImage = (fileName) => {
     const ref = storage
       .ref()
-      .child(`artist/${fileName}`)
+      .child(`artists/${fileName}`)
 
     return ref.put(file)
   }

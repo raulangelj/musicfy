@@ -8,7 +8,7 @@ import {
 import './MenuLeft.scss'
 import { isUserAdmin } from '../../firebase/Apis'
 import BasicModal from '../Modal/BasicModal'
-import AddArtistForm from '../Artists'
+import AddArtistForm from '../Artists/ArtistsForm'
 
 const MenuLeft = ({ user }) => {
   const location = useLocation()
