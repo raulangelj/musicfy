@@ -17,7 +17,6 @@ const AddArtistForm = ({ setModal }) => {
   }
 
   const onDrop = useCallback((acceptedFile) => {
-    console.log(acceptedFile)
     const firstFile = acceptedFile[0]
     setFile(firstFile)
     setBanner(URL.createObjectURL(firstFile))
@@ -40,15 +39,23 @@ const AddArtistForm = ({ setModal }) => {
   return (
     <Form className="add-artist-form" onSubmit={onSubmit}>
       <FormField className="artist-banner">
-        <div {...getRootProps()} className="banner" />
-        <Input
-          {...getInputProps()}
+        <div
+          {...getRootProps()}
+          className="banner"
+          style={{
+            backgroundImage: `url('${banner}')`,
+          }}
         />
+        <Input {...getInputProps()} />
+        {!banner && <Image src={NoImage} />}
       </FormField>
       <FormField className="artist-avatar">
-        <div>
-          Avatar
-        </div>
+        <div
+          className="avatar"
+          style={{
+            backgroundImage: `url('${banner || NoImage}')`,
+          }}
+        />
       </FormField>
       <FormField>
         <Input
