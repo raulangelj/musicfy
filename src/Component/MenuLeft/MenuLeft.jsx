@@ -6,7 +6,7 @@ import {
   Link, useLocation, useNavigate, useParams,
 } from 'react-router-dom'
 import './MenuLeft.scss'
-import isUserAdmin from '../../firebase/Apis'
+import { isUserAdmin } from '../../firebase/Apis'
 import BasicModal from '../Modal/BasicModal'
 
 const MenuLeft = ({ user }) => {
