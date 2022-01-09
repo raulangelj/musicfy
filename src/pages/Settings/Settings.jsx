@@ -28,7 +28,7 @@ const Settings = ({ user, setreloadApp }) => {
         <UserName user={user} setModal={setModal} setreloadApp={setreloadApp} />
       </div>
       <UserEmail user={user} setModal={setModal} />
-      <UserPassword user={user} />
+      <UserPassword setModal={setModal} />
       <BasicModal show={modal.show} setmodal={setModal} title={modal.title}>
         {
           modal.content
