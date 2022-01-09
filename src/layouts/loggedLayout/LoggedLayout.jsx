@@ -8,9 +8,10 @@ import MenuLeft from '../../Component/MenuLeft'
 import './LoggedLayout.scss'
 import TopBar from '../../Component/TopBar'
 
-const LoggedLayout = ({ user }) => {
+const LoggedLayout = ({ user, setreloadApp }) => {
   LoggedLayout.propTypes = {
     user: PropTypes.object.isRequired,
+    setreloadApp: PropTypes.func.isRequired,
   }
   return (
     <Router>
@@ -21,7 +22,7 @@ const LoggedLayout = ({ user }) => {
           </Grid.Column>
           <Grid.Column className="content" width={13}>
             <TopBar user={user} />
-            <Routess />
+            <Routess user={user} setreloadApp={setreloadApp} />
           </Grid.Column>
         </Grid.Row>
         <GridRow>

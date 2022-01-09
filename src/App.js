@@ -8,6 +8,7 @@ import AuthComponent from './pages/Auth/AuthComponent'
 function App() {
   const [user, setUser] = useState(null)
   const [isloading, setisloading] = useState(true)
+  const [reloadApp, setreloadApp] = useState(false)
 
   auth.onAuthStateChanged((currentUser) => {
     if (!currentUser?.emailVerified) {
@@ -31,6 +32,7 @@ function App() {
           : (
             <LoggedLayout
               user={user}
+              setreloadApp={setreloadApp}
             />
           )
       }

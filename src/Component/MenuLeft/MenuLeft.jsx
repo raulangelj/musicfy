@@ -6,7 +6,7 @@ import {
   Link, useLocation, useNavigate, useParams,
 } from 'react-router-dom'
 import './MenuLeft.scss'
-import isUserAdmin from '../../firebase/Apis'
+import { isUserAdmin } from '../../firebase/Apis'
 import BasicModal from '../Modal/BasicModal'
 
 const MenuLeft = ({ user }) => {
@@ -15,10 +15,11 @@ const MenuLeft = ({ user }) => {
   const params = useParams()
   const [activeMenu, setactiveMenu] = useState(location.pathname)
   const [userAdmin, setuserAdmin] = useState(false)
-  // * Cambiar a un solo objeto
-  const [showModal, setshowModal] = useState(false)
-  const [titleModal, settitleModal] = useState(null)
-  const [contentModal, setcontentModal] = useState(null)
+  const [modal, setmodal] = useState({
+    show: false,
+    title: '',
+    content: '',
+  })
 
   MenuLeft.propTypes = {
     user: PropTypes.object.isRequired,
@@ -43,19 +44,25 @@ const MenuLeft = ({ user }) => {
   const handleModal = (type) => {
     switch (type) {
       case 'artist':
-        settitleModal('Nuevo artista')
-        setcontentModal(<h2>Formulario nuevo artista</h2>)
-        setshowModal(true)
+        setmodal({
+          title: 'Nuevo artista',
+          content: <h2>Formulario nuevo artista</h2>,
+          show: true,
+        })
         break
       case 'song':
-        settitleModal('Nueva cancion')
-        setcontentModal(<h2>Formulario nueva cancion</h2>)
-        setshowModal(true)
+        setmodal({
+          title: 'Nueva cancion',
+          content: <h2>Formulario nueva cancion</h2>,
+          show: true,
+        })
         break
       default:
-        settitleModal(null)
-        setshowModal(false)
-        setcontentModal(null)
+        setmodal({
+          title: null,
+          content: null,
+          show: false,
+        })
         break
     }
   }
@@ -91,9 +98,9 @@ const MenuLeft = ({ user }) => {
           </div>
         )}
       </Menu>
-      <BasicModal show={showModal} title={titleModal} setShow={setshowModal}>
+      <BasicModal show={modal.show} title={modal.title} setmodal={setmodal}>
         {
-          contentModal
+          modal.content
         }
       </BasicModal>
     </>

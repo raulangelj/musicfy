@@ -4,14 +4,16 @@ import { Modal, Icon } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import './BasicModal.scss'
 
+// * Setmodal is the change state function of the whole modal data object
+// * show, title, content (children) are the object modal state attr
 const BasicModal = ({
-  show, setShow, title, children, size,
+  show, setmodal, title, children, size,
 }) => {
   BasicModal.propTypes = {
     show: PropTypes.bool,
     size: PropTypes.string,
     title: PropTypes.string,
-    setShow: PropTypes.func,
+    setmodal: PropTypes.func,
     children: PropTypes.node,
   }
 
@@ -19,12 +21,15 @@ const BasicModal = ({
     title: '',
     show: false,
     size: 'tiny',
-    setShow: () => null,
+    setmodal: () => null,
     children: <div>{null}</div>,
   }
 
   const onClose = () => {
-    setShow(false)
+    setmodal((prevState) => ({
+      ...prevState,
+      show: false,
+    }))
   }
   return (
     <Modal open={show} onClose={onClose} className="basic-modal" size={size}>
