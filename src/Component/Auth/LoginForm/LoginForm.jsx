@@ -8,27 +8,12 @@ import PropTypes from 'prop-types'
 import './LoginForm.scss'
 import validateEmail from '../../../utils/Validations'
 import { auth } from '../../../firebase/firebaseConfig'
+import alertErrors from '../../../utils/AlertErros'
 
 const defaultValueForm = () => ({
   email: '',
   password: '',
 })
-
-// FUNCTION TO HANDLE DIFERENTS FIREBASE AUTH ERRORS
-const handleErrors = (errCode) => {
-  switch (errCode) {
-    case 'auth/user-not-found':
-    case 'auth/wrong-password':
-      toast.warning('El usuario o la contraseña son incorrectos.')
-      break
-    case 'auth/too-many-requests':
-      toast.warning('Has enviado demasiadas solicitudes de email de confirmacion en muy poco tiempo.')
-      break
-    default:
-      toast.warning('Ha ocurrido un error, revisa tu correo y contraseña e intentalo mas tarde.')
-      break
-  }
-}
 
 // TEXT AND BUTTON TO RESEND VERIFICATION EMAIL
 const ButtonResetSendEmailVerification = ({ user, setisloading, setuserActive }) => {
@@ -44,7 +29,7 @@ const ButtonResetSendEmailVerification = ({ user, setisloading, setuserActive })
         toast.success('Se ha enviado un email para verificar la cuenta.')
       })
       .catch((err) => {
-        handleErrors(err)
+        alertErrors(err.code)
       })
       .finally(() => {
         setisloading(false)
@@ -111,7 +96,7 @@ const LoginForm = ({ setselectedForm }) => {
           !res.user.emailVerified && toast.warning('Para hacer login primero debes de verificar tu correo.')
         })
         .catch((err) => {
-          handleErrors(err.code)
+          alertErrors(err.code)
         })
         .finally(() => {
           setisloading(false)
