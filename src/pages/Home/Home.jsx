@@ -30,7 +30,12 @@ const Home = () => {
     <>
       <BannerHome />
       <div className="home">
-        <BasicSliderItems title="Ultimos artistas" data={artists} />
+        <BasicSliderItems
+          title="Ultimos artistas"
+          data={artists}
+          folderImage="artists"
+          urlName="artist"
+        />
         <h2>Mas ...</h2>
       </div>
     </>

@@ -40,7 +40,7 @@ const AddArtistForm = ({ setModal }) => {
   const uploadImage = (fileName) => {
     const ref = storage
       .ref()
-      .child(`artist/${fileName}`)
+      .child(`artists/${fileName}`)
 
     return ref.put(file)
   }

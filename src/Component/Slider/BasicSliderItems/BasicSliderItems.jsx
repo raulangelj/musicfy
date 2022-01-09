@@ -3,18 +3,21 @@ import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import Slider from 'react-slick'
 import './BasicSliderItem.scss'
+import { Link } from 'react-router-dom'
 import { storage } from '../../../firebase/firebaseConfig'
 import alertErrors from '../../../utils/AlertErros'
 
 // COMPONENT FOR ARTIST ITEM
-const RenderItem = ({ item }) => {
+const RenderItem = ({ item, folderImage, urlName }) => {
   const [imageUrl, setImageUrl] = useState(null)
   RenderItem.propTypes = {
     item: propTypes.object.isRequired,
+    folderImage: propTypes.string.isRequired,
+    urlName: propTypes.string.isRequired,
   }
 
   useEffect(() => {
-    storage.ref(`artist/${item.banner}`)
+    storage.ref(`${folderImage}/${item.banner}`)
       .getDownloadURL()
       .then((res) => {
         setImageUrl(res)
@@ -25,23 +28,29 @@ const RenderItem = ({ item }) => {
   }, [])
 
   return (
-    <div className="basic-slider-items__list-item">
-      <div
-        className="avatar"
-        style={{
-          backgroundImage: `url('${imageUrl}')`,
-        }}
-      />
-      <h3>{item.name}</h3>
-    </div>
+    <Link to={`/${urlName}/${item.id}`}>
+      <div className="basic-slider-items__list-item">
+        <div
+          className="avatar"
+          style={{
+            backgroundImage: `url('${imageUrl}')`,
+          }}
+        />
+        <h3>{item.name}</h3>
+      </div>
+    </Link>
   )
 }
 
 // COMPONENT FOR SLIDER
-const BasicSliderItems = ({ title, data }) => {
+const BasicSliderItems = ({
+  title, data, folderImage, urlName,
+}) => {
   BasicSliderItems.propTypes = {
     title: propTypes.string.isRequired,
     data: propTypes.array.isRequired,
+    folderImage: propTypes.string.isRequired,
+    urlName: propTypes.string.isRequired,
   }
 
   const settings = {
@@ -60,7 +69,12 @@ const BasicSliderItems = ({ title, data }) => {
       <Slider {...settings}>
         {
           data.map((artist) => (
-            <RenderItem key={artist.id} item={artist} />
+            <RenderItem
+              key={artist.id}
+              item={artist}
+              urlName={urlName}
+              folderImage={folderImage}
+            />
           ))
         }
       </Slider>
