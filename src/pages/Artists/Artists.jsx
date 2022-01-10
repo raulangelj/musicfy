@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
-import { Grid } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { Grid, GridColumn } from 'semantic-ui-react'
 import { db, storage } from '../../firebase/firebaseConfig'
 import alertErrors from '../../utils/AlertErros'
 import './Artists.scss'
 
+// component for single artist
 const Artist = ({ artist }) => {
   const [bannerUrl, setBannerUrl] = useState(null)
 
@@ -25,12 +27,21 @@ const Artist = ({ artist }) => {
   }, [artist])
 
   return (
-    <div>
-      <h2>Artis</h2>
-    </div>
+    <Link to={`/artist/${artist.id}`}>
+      <div className="artists__item">
+        <div
+          className="avatar"
+          style={{
+            backgroundImage: `url('${bannerUrl}')`,
+          }}
+        />
+        <h3>{artist.name}</h3>
+      </div>
+    </Link>
   )
 }
 
+// Artist Page
 const Artists = () => {
   const [artists, setArtists] = useState(null)
 
@@ -50,13 +61,16 @@ const Artists = () => {
         alertErrors(err.code)
       })
   }, [])
+
   return (
     <div className="artists">
       <h1>Artistas</h1>
       <Grid>
         {
           artists?.map((artist) => (
-            <Artist key={artist.id} artist={artist} />
+            <GridColumn key={artist.id} mobile={8} tablet={4} computer={3}>
+              <Artist artist={artist} />
+            </GridColumn>
           ))
         }
       </Grid>
