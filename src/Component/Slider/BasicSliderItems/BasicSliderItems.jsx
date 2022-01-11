@@ -46,6 +46,7 @@ const RenderItem = ({ item, folderImage, urlName }) => {
 const BasicSliderItems = ({
   title, data, folderImage, urlName,
 }) => {
+  console.log('data: ', data)
   BasicSliderItems.propTypes = {
     title: propTypes.string.isRequired,
     data: propTypes.array.isRequired,
@@ -61,6 +62,10 @@ const BasicSliderItems = ({
     slidesToScroll: 1,
     centerMode: true,
     className: 'basic-slider-items__list',
+  }
+
+  if (data.lenght < 5) {
+    return null
   }
 
   return (
