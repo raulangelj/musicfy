@@ -8,7 +8,9 @@ import './Home.scss'
 
 const Home = () => {
   const [artists, setArtists] = useState([])
+  const [albums, setAlbums] = useState([])
 
+  // USEEFECT TO GET ARTIST DATA IN FIREBASE
   useEffect(() => {
     db.collection('artists')
       .get()
@@ -26,6 +28,23 @@ const Home = () => {
       })
   }, [])
 
+  // USEEFECT TO GET ALBUM DATA FROM FIREBASE
+  useEffect(() => {
+    db.collection('albums')
+      .get()
+      .then((res) => {
+        const arrayAlbums = []
+        res.docs?.forEach((doc) => {
+          const data = doc.data()
+          data.id = doc.id
+          arrayAlbums.push(data)
+        })
+        setAlbums(arrayAlbums)
+      })
+      .catch((err) => {
+        alertErrors(err.code)
+      })
+  }, [])
   return (
     <>
       <BannerHome />
@@ -35,6 +54,12 @@ const Home = () => {
           data={artists}
           folderImage="artists"
           urlName="artist"
+        />
+        <BasicSliderItems
+          title="Ultimos Albums"
+          data={albums}
+          folderImage="albums"
+          urlName="album"
         />
         <h2>Mas ...</h2>
       </div>
