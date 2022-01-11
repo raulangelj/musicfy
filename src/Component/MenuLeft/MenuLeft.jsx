@@ -9,6 +9,7 @@ import './MenuLeft.scss'
 import { isUserAdmin } from '../../firebase/Apis'
 import BasicModal from '../Modal/BasicModal'
 import AddArtistForm from '../Artists/ArtistsForm'
+import AddAlbumForm from '../Albums/AddAlbumForm'
 
 const MenuLeft = ({ user }) => {
   const location = useLocation()
@@ -51,6 +52,13 @@ const MenuLeft = ({ user }) => {
           show: true,
         })
         break
+      case 'album':
+        setmodal({
+          title: 'Nuevo album',
+          content: <AddAlbumForm setModal={setmodal} />,
+          show: true,
+        })
+        break
       case 'song':
         setmodal({
           title: 'Nueva cancion',
@@ -90,6 +98,11 @@ const MenuLeft = ({ user }) => {
               <Icon name="plus square outline" />
               {' '}
               Nuevo Artista
+            </MenuItem>
+            <MenuItem onClick={() => handleModal('album')}>
+              <Icon name="plus square outline" />
+              {' '}
+              Nuevo Album
             </MenuItem>
             <MenuItem onClick={() => handleModal('song')}>
               <Icon name="plus square outline" />
