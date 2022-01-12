@@ -1,9 +1,40 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { Loader } from 'semantic-ui-react'
+import propTypes from 'prop-types'
 import { db, storage } from '../../firebase/firebaseConfig'
 import alertErrors from '../../utils/AlertErros'
 import './Album.scss'
+
+const HeaderAlbum = ({ album, albumImage, artist }) => {
+  HeaderAlbum.propTypes = {
+    album: propTypes.object.isRequired,
+    albumImage: propTypes.string.isRequired,
+    artist: propTypes.object.isRequired,
+  }
+
+  return (
+    <div className="album__header">
+      <div
+        className="image"
+        style={{
+          backgroundImage: `url('${albumImage}')`,
+        }}
+      />
+      <div className="info">
+        <h1>{album.name}</h1>
+        <p>
+          De
+          {' '}
+          <Link to={`/artist/${artist.id}`}>
+            <span>{artist.name}</span>
+          </Link>
+        </p>
+      </div>
+    </div>
+  )
+}
 
 const Album = () => {
   const params = useParams()
@@ -12,7 +43,7 @@ const Album = () => {
   const [albumImage, setAlbumImage] = useState(null)
   const [artist, setArtist] = useState(null)
 
-  // USEEFECT TO GET ALBUM IMAGE IN FIRESTORE
+  // USEEFECT TO GET ALBUM DATA IN FIRESTORE
   useEffect(() => {
     db.collection('albums')
       .doc(id)
@@ -46,7 +77,9 @@ const Album = () => {
         .doc(album?.artist)
         .get()
         .then((res) => {
-          setArtist(res.data())
+          const data = res.data()
+          data.id = res.id
+          setArtist(data)
         })
         .catch((err) => {
           alertErrors(err.code)
@@ -54,9 +87,18 @@ const Album = () => {
     }
   }, [album])
 
+  if (!album || !artist || !albumImage) {
+    return (
+      <Loader active>Cargando...</Loader>
+    )
+  }
+
   return (
-    <div>
-      <h2>Single page album</h2>
+    <div className="album">
+      <HeaderAlbum artist={artist} album={album} albumImage={albumImage} />
+      <div className="album__songs">
+        <p>lista de canciones...</p>
+      </div>
     </div>
   )
 }
