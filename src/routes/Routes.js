@@ -3,6 +3,7 @@
 import propTypes from 'prop-types'
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import Album from '../pages/Album'
 import Albums from '../pages/Albums'
 import Artist from '../pages/Artist'
 import Artists from '../pages/Artists'
@@ -21,6 +22,7 @@ const Routess = ({ user, setreloadApp }) => {
       <Route exact path="/artists" element={<Artists />} />
       <Route exact path="/artist/:id" element={<Artist />} />
       <Route exact path="/albums" element={<Albums />} />
+      <Route exact path="/album/:id" element={<Album />} />
       <Route exact path="/settings" element={<Settings user={user} setreloadApp={setreloadApp} />} />
     </Routes>
   )
