@@ -82,13 +82,15 @@ const MenuLeft = ({ user }) => {
         <div className="top">
           <Menu.Item as={Link} to="/" name="home" active={activeMenu === '/'}>
             <Icon name="home" />
-            {' '}
             Inicio
           </Menu.Item>
           <MenuItem as={Link} to="/artists" name="artists" active={activeMenu === '/artists'}>
-            <Icon name="music" />
-            {' '}
+            <Icon name="user" />
             Artistas
+          </MenuItem>
+          <MenuItem as={Link} to="/albums" name="albums" active={activeMenu === '/albums'}>
+            <Icon name="window maximize outline" />
+            Albumes
           </MenuItem>
         </div>
         {userAdmin
