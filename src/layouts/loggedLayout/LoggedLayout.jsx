@@ -7,6 +7,7 @@ import Routess from '../../routes/Routes'
 import MenuLeft from '../../Component/MenuLeft'
 import './LoggedLayout.scss'
 import TopBar from '../../Component/TopBar'
+import Player from '../../Component/Player'
 
 const LoggedLayout = ({ user, setreloadApp }) => {
   LoggedLayout.propTypes = {
@@ -27,7 +28,7 @@ const LoggedLayout = ({ user, setreloadApp }) => {
         </Grid.Row>
         <GridRow>
           <GridColumn width={16}>
-            <h2>Player</h2>
+            <Player />
           </GridColumn>
         </GridRow>
       </Grid>
