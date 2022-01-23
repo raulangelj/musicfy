@@ -1,16 +1,18 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import {
   Button,
-  Dropdown, Form, FormField, Input,
+  Dropdown, Form, FormField, Icon, Input,
 } from 'semantic-ui-react'
+import { useDropzone } from 'react-dropzone'
 import { db } from '../../../firebase/firebaseConfig'
 import './AddSongForm.scss'
 import alertErrors from '../../../utils/AlertErros'
 
 const AddSongForm = ({ setModal }) => {
   const [albums, setAlbums] = useState([])
+  const [file, setFile] = useState(null)
 
   AddSongForm.propTypes = {
     setModal: propTypes.func.isRequired,
@@ -25,6 +27,17 @@ const AddSongForm = ({ setModal }) => {
     { key: '2', value: '2', text: 'opcion 2' },
     { key: '3', value: '3', text: 'opcion 3' },
   ]
+
+  const onDrop = useCallback((acceptedFile) => {
+    const filedrop = acceptedFile[0]
+    setFile(filedrop)
+  })
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: '.mp3',
+    noKeyboard: true,
+    onDrop,
+  })
 
   useEffect(() => {
     db.collection('albums')
@@ -63,7 +76,27 @@ const AddSongForm = ({ setModal }) => {
         />
       </FormField>
       <FormField>
-        <h2>upload song</h2>
+        <div className="song-upload" {...getRootProps()}>
+          <input {...getInputProps()} />
+          <Icon name="cloud upload" className={file && 'load'} />
+          <div>
+            <p>
+              Arrastra tu cancion o haz click
+              {' '}
+              <span>aqui</span>
+              .
+            </p>
+            {
+              file && (
+                <p>
+                  Cancion subida:
+                  {' '}
+                  <span>{file.name}</span>
+                </p>
+              )
+            }
+          </div>
+        </div>
       </FormField>
       <Button type="submit">Subir Cancion</Button>
     </Form>
