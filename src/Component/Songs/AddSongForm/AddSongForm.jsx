@@ -1,12 +1,17 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import {
   Button,
   Dropdown, Form, FormField, Input,
 } from 'semantic-ui-react'
+import { db } from '../../../firebase/firebaseConfig'
+import './AddSongForm.scss'
+import alertErrors from '../../../utils/AlertErros'
 
 const AddSongForm = ({ setModal }) => {
+  const [albums, setAlbums] = useState([])
+
   AddSongForm.propTypes = {
     setModal: propTypes.func.isRequired,
   }
@@ -21,6 +26,26 @@ const AddSongForm = ({ setModal }) => {
     { key: '3', value: '3', text: 'opcion 3' },
   ]
 
+  useEffect(() => {
+    db.collection('albums')
+      .get()
+      .then((res) => {
+        const arrayalbums = []
+        res.docs.forEach((doc) => {
+          const data = doc.data()
+          arrayalbums.push({
+            key: doc.id,
+            value: doc.id,
+            text: data.name,
+          })
+        })
+        setAlbums(arrayalbums)
+      })
+      .catch((err) => {
+        alertErrors(err.code)
+      })
+  })
+
   return (
     <Form className="add-song-form" onSubmit={onSubmit}>
       <FormField>
@@ -34,7 +59,7 @@ const AddSongForm = ({ setModal }) => {
           search
           selection
           lazyLoad
-          options={a}
+          options={albums}
         />
       </FormField>
       <FormField>
