@@ -10,6 +10,7 @@ import { isUserAdmin } from '../../firebase/Apis'
 import BasicModal from '../Modal/BasicModal'
 import AddArtistForm from '../Artists/ArtistsForm'
 import AddAlbumForm from '../Albums/AddAlbumForm'
+import AddSongForm from '../Songs/AddSongForm'
 
 const MenuLeft = ({ user }) => {
   const location = useLocation()
@@ -62,7 +63,7 @@ const MenuLeft = ({ user }) => {
       case 'song':
         setmodal({
           title: 'Nueva cancion',
-          content: <h2>Formulario nueva cancion</h2>,
+          content: <AddSongForm setModal={setmodal} />,
           show: true,
         })
         break
