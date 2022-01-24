@@ -6,27 +6,74 @@ import {
   Dropdown, Form, FormField, Icon, Input,
 } from 'semantic-ui-react'
 import { useDropzone } from 'react-dropzone'
-import { db } from '../../../firebase/firebaseConfig'
+import { toast } from 'react-toastify'
+import { v4 as uuidv4 } from 'uuid'
+import { db, storage } from '../../../firebase/firebaseConfig'
 import './AddSongForm.scss'
 import alertErrors from '../../../utils/AlertErros'
 
+const initialValueForm = () => ({
+  name: '',
+  album: '',
+})
+
 const AddSongForm = ({ setModal }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [albums, setAlbums] = useState([])
+  const [formData, setFormData] = useState(initialValueForm)
   const [file, setFile] = useState(null)
 
   AddSongForm.propTypes = {
     setModal: propTypes.func.isRequired,
   }
 
-  const onSubmit = () => {
-    console.log('enviandoooo')
+  const resetForm = () => {
+    setFormData(initialValueForm)
+    setAlbums([])
+    setFile(null)
   }
 
-  const a = [
-    { key: '1', value: '1', text: 'opcion 1' },
-    { key: '2', value: '2', text: 'opcion 2' },
-    { key: '3', value: '3', text: 'opcion 3' },
-  ]
+  const uploadSong = (fileName) => {
+    const ref = storage.ref()
+      .child(`songs/${fileName}`)
+
+    return ref.put(file)
+  }
+
+  const onSubmit = () => {
+    if (!formData.name || !formData.album) {
+      toast.warning('El nombre de la cancion y el album al que petenerce son obligatorios!')
+    } else if (!file) {
+      toast.warning('Hay que ingresar una archivo mp3 para agregar la cancion.')
+    } else {
+      setIsLoading(true)
+      const fileName = uuidv4()
+      uploadSong(fileName)
+        .then((res) => {
+          db.collection('songs')
+            .add({
+              name: formData.name,
+              album: formData.album,
+              fileName,
+            })
+            .then(async () => {
+              toast.success('Cancion guarda correctamente!')
+              await resetForm()
+              await setIsLoading(false)
+              setModal((prevState) => ({
+                ...prevState,
+                show: false,
+              }))
+            })
+            .catch((err) => {
+              toast.error('Error al gaurdar los datos, intentlo mas tarde.')
+            })
+        })
+        .catch((err) => {
+          toast.error('Error al subir la cancion, intentalo de nuevo mas tarde.')
+        })
+    }
+  }
 
   const onDrop = useCallback((acceptedFile) => {
     const filedrop = acceptedFile[0]
@@ -64,6 +111,10 @@ const AddSongForm = ({ setModal }) => {
       <FormField>
         <Input
           placeholder="Nombre de la cancion"
+          onChange={(e) => setFormData({
+            ...formData,
+            name: e.target.value,
+          })}
         />
       </FormField>
       <FormField>
@@ -73,6 +124,10 @@ const AddSongForm = ({ setModal }) => {
           selection
           lazyLoad
           options={albums}
+          onChange={(e, data) => setFormData({
+            ...formData,
+            album: data.value,
+          })}
         />
       </FormField>
       <FormField>
@@ -98,7 +153,7 @@ const AddSongForm = ({ setModal }) => {
           </div>
         </div>
       </FormField>
-      <Button type="submit">Subir Cancion</Button>
+      <Button type="submit" loading={isLoading}>Subir Cancion</Button>
     </Form>
   )
 }
