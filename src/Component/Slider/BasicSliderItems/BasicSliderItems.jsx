@@ -68,11 +68,11 @@ const BasicSliderItems = ({
   }
 
   return (
-    <div className="basic-slider-items__list-items">
+    <div className="basic-slider-items">
       <h2>{title}</h2>
       <Slider {...settings}>
         {
-          data.map((artist) => (
+          data?.map((artist) => (
             <RenderItem
               key={artist.id}
               item={artist}

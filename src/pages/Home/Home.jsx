@@ -1,14 +1,21 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
+import propTypes from 'prop-types'
 import BannerHome from '../../Component/BannerHome'
 import BasicSliderItems from '../../Component/Slider/BasicSliderItems'
+import SongsSlider from '../../Component/Slider/SongsSlider'
 import { db } from '../../firebase/firebaseConfig'
 import alertErrors from '../../utils/AlertErros'
 import './Home.scss'
 
-const Home = () => {
+const Home = ({ playerSong }) => {
   const [artists, setArtists] = useState([])
   const [albums, setAlbums] = useState([])
+  const [songs, setSongs] = useState([])
+
+  Home.propTypes = {
+    playerSong: propTypes.func.isRequired,
+  }
 
   // USEEFECT TO GET ARTIST DATA IN FIREBASE
   useEffect(() => {
@@ -45,6 +52,26 @@ const Home = () => {
         alertErrors(err.code)
       })
   }, [])
+
+  // USEEFECTO TO GET SONGS DATA FROM FIREBASE
+  useEffect(() => {
+    db.collection('songs')
+      .limit(10)
+      .get()
+      .then((res) => {
+        const arraysongs = []
+        res?.docs?.forEach((doc) => {
+          const data = doc?.data()
+          data.id = doc?.id
+          arraysongs.push(data)
+        })
+        setSongs(arraysongs)
+      })
+      .catch((err) => {
+        alertErrors(err.code)
+      })
+  }, [])
+
   return (
     <>
       <BannerHome />
@@ -61,7 +88,11 @@ const Home = () => {
           folderImage="albums"
           urlName="album"
         />
-        <h2>Mas ...</h2>
+        <SongsSlider
+          title="Ultimas Canciones"
+          data={songs}
+          playerSong={playerSong}
+        />
       </div>
     </>
   )
