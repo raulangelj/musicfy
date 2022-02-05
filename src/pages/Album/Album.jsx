@@ -37,13 +37,17 @@ const HeaderAlbum = ({ album, albumImage, artist }) => {
   )
 }
 
-const Album = () => {
+const Album = ({ playerSong }) => {
   const params = useParams()
   const { id } = params
   const [album, setAlbum] = useState(null)
   const [albumImage, setAlbumImage] = useState(null)
   const [artist, setArtist] = useState(null)
   const [songs, setSongs] = useState([])
+
+  Album.propTypes = {
+    playerSong: propTypes.func.isRequired,
+  }
 
   // USEEFECT TO GET ALBUM DATA IN FIRESTORE
   useEffect(() => {
@@ -124,6 +128,8 @@ const Album = () => {
             <ListSongs
               songs={songs}
               albumImg={albumImage}
+              albumName={album}
+              playerSong={playerSong}
             />
           )
         }

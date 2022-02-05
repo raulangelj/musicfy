@@ -6,10 +6,33 @@ import {
 } from 'semantic-ui-react'
 import './ListSongs.scss'
 
-const ListSongs = ({ songs, albumImg }) => {
+const Song = ({ song, albumImg, playerSong }) => {
+  Song.propTypes = {
+    song: propType.object.isRequired,
+    albumImg: propType.string.isRequired,
+    playerSong: propType.func.isRequired,
+  }
+
+  const onPlay = () => {
+    playerSong(albumImg, song.name, song.fileName)
+  }
+
+  return (
+    <TableRow onClick={onPlay}>
+      <TableCell collapsing>
+        <Icon name="play circle outline" />
+      </TableCell>
+      <TableCell>{song.name}</TableCell>
+    </TableRow>
+  )
+}
+
+// AGREGAR A LA LISTA QUE SALGA LA IMAGEN DEL ALGUM Y EL NOMBRE DEL ALBUM COMO SPOTIFY
+const ListSongs = ({ songs, albumImg, playerSong }) => {
   ListSongs.propTypes = {
     songs: propType.array.isRequired,
     albumImg: propType.string.isRequired,
+    playerSong: propType.func.isRequired,
   }
 
   return (
@@ -21,26 +44,17 @@ const ListSongs = ({ songs, albumImg }) => {
           {/* <TableHeaderCell>Album</TableHeaderCell> */}
         </TableRow>
       </TableHeader>
-
       <TableBody>
-        <TableRow>
-          <TableCell collapsing>
-            <Icon name="play circle outline" />
-          </TableCell>
-          <TableCell>cancion 1</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell collapsing>
-            <Icon name="play circle outline" />
-          </TableCell>
-          <TableCell>cancion 2</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell collapsing>
-            <Icon name="play circle outline" />
-          </TableCell>
-          <TableCell>cancion 3</TableCell>
-        </TableRow>
+        {
+          songs?.map((song) => (
+            <Song
+              key={song.id}
+              song={song}
+              playerSong={playerSong}
+              albumImg={albumImg}
+            />
+          ))
+        }
       </TableBody>
     </Table>
   )
