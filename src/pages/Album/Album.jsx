@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Loader } from 'semantic-ui-react'
-import propTypes from 'prop-types'
+import propTypes, { array } from 'prop-types'
 import { db, storage } from '../../firebase/firebaseConfig'
 import alertErrors from '../../utils/AlertErros'
 import './Album.scss'
+import ListSongs from '../../Component/Songs/ListSongs'
 
 const HeaderAlbum = ({ album, albumImage, artist }) => {
   HeaderAlbum.propTypes = {
@@ -36,12 +37,17 @@ const HeaderAlbum = ({ album, albumImage, artist }) => {
   )
 }
 
-const Album = () => {
+const Album = ({ playerSong }) => {
   const params = useParams()
   const { id } = params
   const [album, setAlbum] = useState(null)
   const [albumImage, setAlbumImage] = useState(null)
   const [artist, setArtist] = useState(null)
+  const [songs, setSongs] = useState([])
+
+  Album.propTypes = {
+    playerSong: propTypes.func.isRequired,
+  }
 
   // USEEFECT TO GET ALBUM DATA IN FIRESTORE
   useEffect(() => {
@@ -49,7 +55,9 @@ const Album = () => {
       .doc(id)
       .get()
       .then((res) => {
-        setAlbum(res.data())
+        const data = res.data()
+        data.id = res.id
+        setAlbum(data)
       })
       .catch((err) => {
         alertErrors(err)
@@ -87,6 +95,24 @@ const Album = () => {
     }
   }, [album])
 
+  // GETTING ALBUM SONGS
+  useEffect(() => {
+    if (album) {
+      db.collection('songs')
+        .where('album', '==', album.id)
+        .get()
+        .then((res) => {
+          const arraySongs = []
+          res.forEach((doc) => {
+            const data = doc.data()
+            data.id = doc.id
+            arraySongs.push(data)
+          })
+          setSongs(arraySongs)
+        })
+    }
+  }, [album])
+
   if (!album || !artist || !albumImage) {
     return (
       <Loader active>Cargando...</Loader>
@@ -97,7 +123,16 @@ const Album = () => {
     <div className="album">
       <HeaderAlbum artist={artist} album={album} albumImage={albumImage} />
       <div className="album__songs">
-        <p>lista de canciones...</p>
+        {
+          songs && albumImage && (
+            <ListSongs
+              songs={songs}
+              albumImg={albumImage}
+              albumName={album}
+              playerSong={playerSong}
+            />
+          )
+        }
       </div>
     </div>
   )
