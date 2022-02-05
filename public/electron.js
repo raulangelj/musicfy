@@ -10,8 +10,10 @@ let mainWindow
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1600, height: 850, minHeight: 600, minWidth: 576,
+    width: 1600, height: 850, minHeight: 600, minWidth: 950, title: 'RJ Musicfy', titleBarStyle: 'hiddenInset',
   })
+  // kiosk: true,
+  // resizable: false,
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
   if (isDev) {
     // Open the DevTools.
