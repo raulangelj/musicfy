@@ -25,7 +25,7 @@ const Routess = ({ user, setreloadApp, playerSong }) => {
     <Routes>
       <Route exact path="/" element={<Home playerSong={playerSong} />} />
       <Route exact path="/artists" element={<Artists />} />
-      <Route exact path="/artist/:id" element={<Artist />} />
+      <Route exact path="/artist/:id" element={<Artist playerSong={playerSong} />} />
       <Route exact path="/albums" element={<Albums />} />
       <Route exact path="/album/:id" element={<Album />} />
       <Route exact path="/settings" element={<Settings user={user} setreloadApp={setreloadApp} />} />
