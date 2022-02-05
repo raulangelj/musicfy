@@ -83,7 +83,7 @@ const SongsSlider = ({ title, data, playerSong }) => {
     className: 'songs-slider__list',
   }
 
-  if (data.lenght < 5) {
+  if (data.length < 5) {
     return null
   }
 

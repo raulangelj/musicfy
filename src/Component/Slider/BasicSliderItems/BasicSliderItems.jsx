@@ -63,7 +63,7 @@ const BasicSliderItems = ({
     className: 'basic-slider-items__list',
   }
 
-  if (data.lenght < 5) {
+  if (data.length < 5) {
     return null
   }
 

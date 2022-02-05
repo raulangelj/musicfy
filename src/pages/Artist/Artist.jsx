@@ -1,17 +1,24 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import propTypes from 'prop-types'
 import BannerArtist from '../../Component/Artists/BannerArtist'
 import BasicSliderItems from '../../Component/Slider/BasicSliderItems'
+import SongsSlider from '../../Component/Slider/SongsSlider'
 import { db } from '../../firebase/firebaseConfig'
 import alertErrors from '../../utils/AlertErros'
 import './Artist.scss'
 
-const Artist = () => {
+const Artist = ({ playerSong }) => {
   const params = useParams()
   const { id = '' } = params
   const [artist, setArtist] = useState(null)
   const [albums, setAlbums] = useState([])
+  const [songs, setSongs] = useState([])
+
+  Artist.propTypes = {
+    playerSong: propTypes.func.isRequired,
+  }
 
   // GETTING THE ARTIST DATA
   useEffect(() => {
@@ -49,6 +56,28 @@ const Artist = () => {
     }
   }, [artist])
 
+  // GETTING ALL SONGS
+  useEffect(() => {
+    const arraySong = [];
+    (async () => {
+      await Promise.all(
+        albums.map(async (item) => {
+          await db.collection('songs')
+            .where('album', '==', item.id)
+            .get()
+            .then((res) => {
+              res.forEach((doc) => {
+                const data = doc.data()
+                data.id = doc.id
+                arraySong.push(data)
+              })
+            })
+        }),
+      )
+      setSongs(arraySong)
+    })()
+  }, [albums])
+
   return (
     <div className="artist">
       {artist && <BannerArtist artist={artist} />}
@@ -58,6 +87,11 @@ const Artist = () => {
           data={albums}
           folderImage="albums"
           urlName="album"
+        />
+        <SongsSlider
+          title="Canciones"
+          data={songs}
+          playerSong={playerSong}
         />
       </div>
     </div>
