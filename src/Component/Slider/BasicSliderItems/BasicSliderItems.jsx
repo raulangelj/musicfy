@@ -72,7 +72,7 @@ const BasicSliderItems = ({
       <h2>{title}</h2>
       <Slider {...settings}>
         {
-          data.map((artist) => (
+          data?.map((artist) => (
             <RenderItem
               key={artist.id}
               item={artist}

@@ -11,14 +11,19 @@ import Artists from '../pages/Artists'
 import Home from '../pages/Home'
 import Settings from '../pages/Settings'
 
-const Routess = ({ user, setreloadApp }) => {
+const Routess = ({ user, setreloadApp, playerSong }) => {
   Routess.propTypes = {
     user: propTypes.object.isRequired,
     setreloadApp: propTypes.func.isRequired,
+    playerSong: propTypes.func,
+  }
+
+  Routess.defaultProps = {
+    playerSong: () => null,
   }
   return (
     <Routes>
-      <Route exact path="/" element={<Home />} />
+      <Route exact path="/" element={<Home playerSong={playerSong} />} />
       <Route exact path="/artists" element={<Artists />} />
       <Route exact path="/artist/:id" element={<Artist />} />
       <Route exact path="/albums" element={<Albums />} />
