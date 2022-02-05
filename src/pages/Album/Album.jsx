@@ -6,6 +6,7 @@ import propTypes, { array } from 'prop-types'
 import { db, storage } from '../../firebase/firebaseConfig'
 import alertErrors from '../../utils/AlertErros'
 import './Album.scss'
+import ListSongs from '../../Component/Songs/ListSongs'
 
 const HeaderAlbum = ({ album, albumImage, artist }) => {
   HeaderAlbum.propTypes = {
@@ -43,7 +44,6 @@ const Album = () => {
   const [albumImage, setAlbumImage] = useState(null)
   const [artist, setArtist] = useState(null)
   const [songs, setSongs] = useState([])
-  console.log('songs: ', songs)
 
   // USEEFECT TO GET ALBUM DATA IN FIRESTORE
   useEffect(() => {
@@ -119,7 +119,14 @@ const Album = () => {
     <div className="album">
       <HeaderAlbum artist={artist} album={album} albumImage={albumImage} />
       <div className="album__songs">
-        <p>lista de canciones...</p>
+        {
+          songs && albumImage && (
+            <ListSongs
+              songs={songs}
+              albumImg={albumImage}
+            />
+          )
+        }
       </div>
     </div>
   )
