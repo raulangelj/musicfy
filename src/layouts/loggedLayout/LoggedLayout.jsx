@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, HashRouter } from 'react-router-dom'
 import {
   Button, Grid, GridColumn, GridRow,
 } from 'semantic-ui-react'
@@ -38,7 +38,8 @@ const LoggedLayout = ({ user, setreloadApp }) => {
   }
 
   return (
-    <Router>
+    // <Router>
+    <HashRouter>
       <Grid className="logged-layout">
         <Grid.Row>
           <Grid.Column width={3}>
@@ -55,7 +56,8 @@ const LoggedLayout = ({ user, setreloadApp }) => {
           </GridColumn>
         </GridRow>
       </Grid>
-    </Router>
+    </HashRouter>
+    // </Router>
   )
 }
 
