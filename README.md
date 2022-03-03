@@ -6,6 +6,16 @@ This is a desktop aplication to listen music. It let users create an acount, ver
 
 In the project directory, you can run:
 
+### `npm run electron-dev`
+
+It open the electron dev aplication for depelopers. Host the app in electron window of web app located in [http://localhost:3000](http://localhost:3000)
+
+### `npm run electron-pack`
+
+It allow to compile the proyect to create the app.
+
+Added `--mac` it create .dmg for mac app.
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -23,16 +33,6 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run electron-dev`
-
-It open the electron dev aplication for depelopers. Host the app in electron window of web app located in [http://localhost:3000](http://localhost:3000)
-
-### `npm run electron-pack`
-
-It allow to compile the proyect to create the app.
-
-Added `--mac` it create .dmg for mac app.
 
 ### `npm run eject`
 
