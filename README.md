@@ -14,7 +14,9 @@ It open the electron dev aplication for depelopers. Host the app in electron win
 
 It allow to compile the proyect to create the app.
 
-Added `--mac` it create .dmg for mac app.
+Add `--mac` it create .dmg for mac app. **Needs to be run on a mac computer.** It will create the dmg for mac OS.
+
+Add `--win` it create .exe for windows desktop. **Needs to be run on a windows computer.**
 
 ### `npm start`
 
